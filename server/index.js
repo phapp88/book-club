@@ -169,10 +169,7 @@ app.prepare()
         }
       }))
       .get('*', (req, res) => handle(req, res))
-      .listen(3000, (err) => {
-        if (err) throw err;
-        console.log('> Ready on http://localhost:3000');
-      });
+      .listen(process.env.PORT || 3000);
   })
   .catch((ex) => {
     console.error(ex.stack);

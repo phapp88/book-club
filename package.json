@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "next build",
     "dev": "nodemon -w server/index.js server/index.js",
+    "heroku-postbuild": "npm run build",
+    "start": "NODE_ENV=production node server/index.js -p$PORT",
     "lint": "eslint ."
   },
   "keywords": [],
