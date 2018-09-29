@@ -22,6 +22,7 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "helmet": "^3.13.0",
     "isomorphic-unfetch": "^2.0.0",
     "material-ui": "^1.0.0-beta.38",
     "material-ui-icons": "^1.0.0-beta.36",
