@@ -4,7 +4,7 @@ let connection;
 
 const dbConnection = () => {
   if (!connection) {
-    connection = mongodb.connect(process.env.MLAB);
+    connection = mongodb.connect(process.env.MLAB, { useNewUrlParser: true });
   }
   return connection;
 };
