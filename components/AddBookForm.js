@@ -1,13 +1,15 @@
 import fetch from 'isomorphic-unfetch';
-import { FormHelperText } from 'material-ui/Form';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import { ObjectID } from 'bson';
-import IconButton from 'material-ui/IconButton';
-import Input, { InputAdornment } from 'material-ui/Input';
-import Paper from 'material-ui/Paper';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Toolbar from 'material-ui/Toolbar';
-import { withStyles } from 'material-ui/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   helperText: {
@@ -78,7 +80,7 @@ class AddBookForm extends React.Component {
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton className={classes.iconButton} type="submit">
-                    <i className="fas fa-plus" />
+                    <Icon className="fas fa-plus fa-1x" />
                   </IconButton>
                 </InputAdornment>
               }
@@ -89,7 +91,9 @@ class AddBookForm extends React.Component {
             />
           </Toolbar>
         </Paper>
-        <FormHelperText className={classes.helperText} error>{errMsg}</FormHelperText>
+        <FormHelperText className={classes.helperText} error>
+          {errMsg}
+        </FormHelperText>
       </form>
     );
   }

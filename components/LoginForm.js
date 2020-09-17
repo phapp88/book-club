@@ -1,13 +1,13 @@
-import Button from 'material-ui/Button';
-import { FormHelperText } from 'material-ui/Form';
+import Button from '@material-ui/core/Button';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
-import TextField from 'material-ui/TextField';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+const styles = (theme) => ({
   button: {
     backgroundColor: theme.palette.primary.main,
     color: 'white',
@@ -44,8 +44,15 @@ class LoginForm extends React.Component {
     const { classes } = this.props;
     const { email, errMsg, password } = this.state;
     return (
-      <form action="/login" autoComplete="off" className={classes.form} method="post">
-        <Typography className={classes.heading} variant="display1">Login</Typography>
+      <form
+        action="/login"
+        autoComplete="off"
+        className={classes.form}
+        method="post"
+      >
+        <Typography className={classes.heading} variant="h4">
+          Login
+        </Typography>
         <TextField
           fullWidth
           id="email"
@@ -66,9 +73,16 @@ class LoginForm extends React.Component {
           value={password}
         />
         <FormHelperText error>{errMsg}</FormHelperText>
-        <Button className={classes.button} type="submit">Login</Button>
+        <Button className={classes.button} type="submit" variant="contained">
+          Login
+        </Button>
         <Link prefetch href="/signup">
-          <Button className={`${classes.button} ${classes.linkBtn}`}>Register</Button>
+          <Button
+            className={`${classes.button} ${classes.linkBtn}`}
+            variant="contained"
+          >
+            Register
+          </Button>
         </Link>
       </form>
     );

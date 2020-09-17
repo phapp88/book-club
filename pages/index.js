@@ -4,7 +4,6 @@ import React from 'react';
 import Features from '../components/Features';
 import Layout from '../components/Layout';
 import MainTitle from '../components/MainTitle';
-import withRoot from '../src/withRoot';
 
 const Index = ({ userId }) => (
   <Layout userId={userId}>
@@ -31,4 +30,4 @@ Index.propTypes = {
   userId: PropTypes.string.isRequired,
 };
 
-export default withRoot(Index);
+export default Index;

@@ -1,11 +1,11 @@
-import AppBar from 'material-ui/AppBar';
-import Button from 'material-ui/Button';
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   button: {
@@ -23,20 +23,21 @@ const styles = {
 const GuestNavBar = ({ classes }) => (
   <AppBar>
     <Toolbar>
-      <Typography className={classes.flex} variant="title">Book Trading Club</Typography>
-      <Link prefetch href="/">
+      <Typography className={classes.flex} variant="h6">
+        Book Trading Club
+      </Typography>
+      <Link href="/">
         <Button className={classes.button}>Home</Button>
       </Link>
-      <Link prefetch href="/signup">
+      <Link href="/signup">
         <Button className={classes.button}>Sign Up</Button>
       </Link>
-      <Link prefetch href="/login">
+      <Link href="/login">
         <Button className={classes.button}>Login</Button>
       </Link>
     </Toolbar>
   </AppBar>
 );
-
 
 GuestNavBar.propTypes = {
   classes: PropTypes.shape({

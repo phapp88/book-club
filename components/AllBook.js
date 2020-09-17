@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   button: {
@@ -23,9 +23,7 @@ const styles = {
   },
 };
 
-const AllBook = ({
-  book, classes, handleTradeOffer, userId,
-}) => {
+const AllBook = ({ book, classes, handleTradeOffer, userId }) => {
   const handleClick = () => {
     const { id: bookId, userId: offereeId } = book;
     const offerorId = userId;
@@ -43,10 +41,11 @@ const AllBook = ({
   return (
     <div className={classes.root}>
       <img alt={title} src={imgLink} />
-      { bookUserId !== userId && book.isAvailable &&
+      {bookUserId !== userId && book.isAvailable && (
         <button className={classes.button} onClick={handleClick}>
-          <i className="fas fa-exchange-alt" />
-        </button>}
+          <i className="fas fa-exchange-alt fa-1x" />
+        </button>
+      )}
     </div>
   );
 };

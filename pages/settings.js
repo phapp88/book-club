@@ -5,14 +5,11 @@ import React from 'react';
 import ChangePasswordForm from '../components/ChangePasswordForm';
 import Layout from '../components/Layout';
 import ProfileForm from '../components/ProfileForm';
-import withRoot from '../src/withRoot';
 
 class Settings extends React.Component {
   constructor(props) {
     super(props);
-    const {
-      city, currentPassword, name, newPassword, state,
-    } = this.props;
+    const { city, currentPassword, name, newPassword, state } = this.props;
     this.state = {
       city,
       currentPassword,
@@ -151,4 +148,4 @@ Settings.defaultProps = {
   newPassword: '',
 };
 
-export default withRoot(Settings);
+export default Settings;

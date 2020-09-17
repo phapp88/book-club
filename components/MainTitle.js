@@ -1,9 +1,10 @@
+import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+const styles = (theme) => ({
   icon: {
     color: 'white',
     margin: '7.5px auto',
@@ -23,13 +24,16 @@ const styles = theme => ({
 
 const MainTitle = (props) => {
   const { classes } = props;
+
   return (
     <div className={classes.root}>
-      <Typography className={classes.title} variant="display3">Book Trading Club</Typography>
-      <Typography className={classes.subheading} variant="subheading">
+      <Typography className={classes.title} variant="h2">
+        Book Trading Club
+      </Typography>
+      <Typography className={classes.subheading} variant="subtitle1">
         Trade and borrow books from people all over the world.
       </Typography>
-      <i className={`fas fa-book fa-5x ${classes.icon}`} />
+      <Icon className={`fas fa-book fa-5x ${classes.icon}`} />
     </div>
   );
 };

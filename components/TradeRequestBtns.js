@@ -1,9 +1,9 @@
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+const styles = (theme) => ({
   button: {
     backgroundColor: theme.palette.primary.main,
     color: 'white',
@@ -19,12 +19,17 @@ const TradeRequestBtns = ({ classes, toggleTradeRequests, trades }) => {
   const { awaitingApproval, submitted } = trades;
   return (
     <div>
-      <Button className={classes.button} onClick={toggleTradeRequests}>
+      <Button
+        className={classes.button}
+        onClick={toggleTradeRequests}
+        variant="contained"
+      >
         Submitted Trade Proposals ({submitted.length})
       </Button>
       <Button
         className={`${classes.button} ${classes.rightBtn}`}
         onClick={toggleTradeRequests}
+        variant="contained"
       >
         Offers Awaiting Approval ({awaitingApproval.length})
       </Button>

@@ -3,11 +3,8 @@ import React from 'react';
 
 import Layout from '../components/Layout';
 import LoginForm from '../components/LoginForm';
-import withRoot from '../src/withRoot';
 
-const Login = ({
-  email, errMsg, password, userId,
-}) => (
+const Login = ({ email, errMsg, password, userId }) => (
   <Layout userId={userId}>
     <LoginForm email={email} errMsg={errMsg} password={password} />
   </Layout>
@@ -21,15 +18,19 @@ Login.getInitialProps = ({ query, req }) => {
     ({ userId } = query);
   }
   if (Object.keys(query).length > 1) {
-    const {
-      email, errMsg, password,
-    } = query;
+    const { email, errMsg, password } = query;
     return {
-      email, errMsg, password, userId,
+      email,
+      errMsg,
+      password,
+      userId,
     };
   }
   return {
-    email: '', errMsg: '', password: '', userId,
+    email: '',
+    errMsg: '',
+    password: '',
+    userId,
   };
 };
 
@@ -40,4 +41,4 @@ Login.propTypes = {
   userId: PropTypes.string.isRequired,
 };
 
-export default withRoot(Login);
+export default Login;

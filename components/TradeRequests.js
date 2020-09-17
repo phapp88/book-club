@@ -1,11 +1,16 @@
-import IconButton from 'material-ui/IconButton';
-import List, { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+const styles = (theme) => ({
   checkIcon: {
     color: 'green',
   },
@@ -30,32 +35,42 @@ const styles = theme => ({
 });
 
 const TradeRequests = ({
-  classes, handleAcceptedOffer, handleRejectedOffer, title, trades,
+  classes,
+  handleAcceptedOffer,
+  handleRejectedOffer,
+  title,
+  trades,
 }) => {
   const approvalNeeded = title.split(' ')[2] === 'Approval';
   return (
     <div>
-      <Typography className={classes.title} variant="display1">{title}</Typography>
+      <Typography className={classes.title} variant="h4">
+        {title}
+      </Typography>
       <List dense disablePadding>
-        {trades.map(trade => (
+        {trades.map((trade) => (
           <ListItem divider key={trade.book.id}>
             <ListItemIcon>
-              <i className="fas fa-book" />
+              <Icon className="fas fa-book fa-1x" />
             </ListItemIcon>
-            <ListItemText className={classes.listItemText} primary={trade.book.title} />
+            <ListItemText
+              className={classes.listItemText}
+              primary={trade.book.title}
+            />
             <ListItemSecondaryAction>
-              {approvalNeeded &&
+              {approvalNeeded && (
                 <IconButton
                   className={`${classes.iconButton} ${classes.checkIcon}`}
                   onClick={() => handleAcceptedOffer(trade)}
                 >
-                  <i className="fas fa-check" />
-                </IconButton>}
+                  <Icon className="fas fa-check fa-1x" />
+                </IconButton>
+              )}
               <IconButton
                 className={`${classes.iconButton} ${classes.timesIcon}`}
                 onClick={() => handleRejectedOffer(trade)}
               >
-                <i className="fas fa-times" />
+                <Icon className="fas fa-times fa-1x" />
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>

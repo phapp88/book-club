@@ -3,18 +3,10 @@ import React from 'react';
 
 import Layout from '../components/Layout';
 import SignupForm from '../components/SignupForm';
-import withRoot from '../src/withRoot';
 
-const Signup = ({
-  email, errMsg, name, password, userId,
-}) => (
-  <Layout userId={userId} >
-    <SignupForm
-      email={email}
-      errMsg={errMsg}
-      name={name}
-      password={password}
-    />
+const Signup = ({ email, errMsg, name, password, userId }) => (
+  <Layout userId={userId}>
+    <SignupForm email={email} errMsg={errMsg} name={name} password={password} />
   </Layout>
 );
 
@@ -26,15 +18,21 @@ Signup.getInitialProps = ({ query, req }) => {
     ({ userId } = query);
   }
   if (Object.keys(query).length > 1) {
-    const {
-      email, errMsg, name, password,
-    } = query;
+    const { email, errMsg, name, password } = query;
     return {
-      email, errMsg, name, password, userId,
+      email,
+      errMsg,
+      name,
+      password,
+      userId,
     };
   }
   return {
-    email: '', errMsg: '', name: '', password: '', userId,
+    email: '',
+    errMsg: '',
+    name: '',
+    password: '',
+    userId,
   };
 };
 
@@ -46,4 +44,4 @@ Signup.propTypes = {
   userId: PropTypes.string.isRequired,
 };
 
-export default withRoot(Signup);
+export default Signup;

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 import GuestNavBar from './GuestNavBar';
 import UserNavBar from './UserNavBar';
@@ -12,9 +12,8 @@ const styles = {
 };
 
 const Layout = ({ children, classes, userId }) => {
-  const NavBar = userId === ''
-    ? <GuestNavBar />
-    : <UserNavBar userId={userId} />;
+  const NavBar =
+    userId === '' ? <GuestNavBar /> : <UserNavBar userId={userId} />;
   return (
     <div>
       {NavBar}

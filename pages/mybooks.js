@@ -1,17 +1,16 @@
 import fetch from 'isomorphic-unfetch';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
 
 import AddBookForm from '../components/AddBookForm';
 import MyBook from '../components/MyBook';
 import Layout from '../components/Layout';
 import TradeRequests from '../components/TradeRequests';
 import TradeRequestBtns from '../components/TradeRequestBtns';
-import withRoot from '../src/withRoot';
 
-const styles = theme => ({
+const styles = (theme) => ({
   books: {
     alignItems: 'center',
     display: 'flex',
@@ -55,12 +54,13 @@ class MyBooks extends React.Component {
     const { userId } = this.props;
     const { books, trades } = this.state;
     this.setState({
-      books: books.filter(book => book.id !== offer.book.id),
+      books: books.filter((book) => book.id !== offer.book.id),
       showAwaitingTrades: trades.awaitingApproval.length > 1,
       trades: {
         ...trades,
-        awaitingApproval: trades.awaitingApproval.filter(trade =>
-          trade.book.id !== offer.book.id),
+        awaitingApproval: trades.awaitingApproval.filter(
+          (trade) => trade.book.id !== offer.book.id
+        ),
       },
     });
     fetch(`/api/trades/${offer.book.id}`, {
@@ -74,12 +74,16 @@ class MyBooks extends React.Component {
   handleRejectedOffer(offer) {
     const { showAwaitingTrades, showSubmittedTrades, trades } = this.state;
     this.setState({
-      showAwaitingTrades: showAwaitingTrades && trades.awaitingApproval.length > 1,
+      showAwaitingTrades:
+        showAwaitingTrades && trades.awaitingApproval.length > 1,
       showSubmittedTrades: showSubmittedTrades && trades.submitted.length > 1,
       trades: {
-        awaitingApproval: trades.awaitingApproval.filter(trade =>
-          trade.book.id !== offer.book.id),
-        submitted: trades.submitted.filter(trade => trade.book.id !== offer.book.id),
+        awaitingApproval: trades.awaitingApproval.filter(
+          (trade) => trade.book.id !== offer.book.id
+        ),
+        submitted: trades.submitted.filter(
+          (trade) => trade.book.id !== offer.book.id
+        ),
       },
     });
     fetch(`/api/trades/${offer.book.id}`, {
@@ -90,13 +94,14 @@ class MyBooks extends React.Component {
 
   removeBook(id) {
     const { books } = this.state;
-    this.setState({ books: books.filter(book => book.id !== id) });
+    this.setState({ books: books.filter((book) => book.id !== id) });
   }
 
   toggleTradeRequests(event) {
     const { showAwaitingTrades, showSubmittedTrades, trades } = this.state;
     const { awaitingApproval, submitted } = trades;
-    const isSubmittedBtn = event.target.textContent.split(' ')[0] === 'Submitted';
+    const isSubmittedBtn =
+      event.target.textContent.split(' ')[0] === 'Submitted';
     if (isSubmittedBtn) {
       if (submitted.length > 0) {
         this.setState({
@@ -115,7 +120,10 @@ class MyBooks extends React.Component {
   render() {
     const { classes, userId } = this.props;
     const {
-      books, showAwaitingTrades, showSubmittedTrades, trades,
+      books,
+      showAwaitingTrades,
+      showSubmittedTrades,
+      trades,
     } = this.state;
     return (
       <Layout userId={userId}>
@@ -124,26 +132,29 @@ class MyBooks extends React.Component {
             toggleTradeRequests={this.toggleTradeRequests}
             trades={trades}
           />
-          {showSubmittedTrades &&
+          {showSubmittedTrades && (
             <TradeRequests
               handleRejectedOffer={this.handleRejectedOffer}
               title="Submitted Trade Proposals"
               trades={trades.submitted}
             />
-          }
-          {showAwaitingTrades &&
+          )}
+          {showAwaitingTrades && (
             <TradeRequests
               handleAcceptedOffer={this.handleAcceptedOffer}
               handleRejectedOffer={this.handleRejectedOffer}
               title="Offers Awaiting Approval"
               trades={trades.awaitingApproval}
             />
-          }
-          <Typography className={classes.title} variant="display1">My Books</Typography>
+          )}
+          <Typography className={classes.title} variant="h4">
+            My Books
+          </Typography>
           <AddBookForm addBook={this.addBook} userId={userId} />
           <div className={classes.books}>
-            {books.map(book =>
-              <MyBook key={book.id} book={book} removeBook={this.removeBook} />)}
+            {books.map((book) => (
+              <MyBook key={book.id} book={book} removeBook={this.removeBook} />
+            ))}
           </div>
         </div>
       </Layout>
@@ -164,11 +175,13 @@ MyBooks.getInitialProps = async ({ query, req }) => {
 };
 
 MyBooks.propTypes = {
-  books: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    imgLink: PropTypes.string,
-    title: PropTypes.string,
-  })).isRequired,
+  books: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      imgLink: PropTypes.string,
+      title: PropTypes.string,
+    })
+  ).isRequired,
   classes: PropTypes.shape({
     books: PropTypes.string,
     main: PropTypes.string,
@@ -181,4 +194,4 @@ MyBooks.propTypes = {
   userId: PropTypes.string.isRequired,
 };
 
-export default withRoot(withStyles(styles)(MyBooks));
+export default withStyles(styles)(MyBooks);

@@ -1,6 +1,7 @@
+import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
   button: {
@@ -31,11 +32,12 @@ const MyBook = ({ book, classes, removeBook }) => {
   };
 
   const { imgLink, title } = book;
+
   return (
     <div className={classes.root}>
-      <img alt={title} src={imgLink} />
+      <img alt={title} src={imgLink} crossOrigin="anonymous" />
       <button className={classes.button} onClick={handleClick}>
-        <i className="fas fa-times" />
+        <Icon className="fas fa-times fa-1x" />
       </button>
     </div>
   );
