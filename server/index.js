@@ -12,6 +12,7 @@ const session = require('express-session');
 const api = require('./api');
 const dbConnection = require('./dbConnection');
 const passport = require('./passport');
+const { getAllBooksAndTrades, getUserBooksAndTrades } = require('./utils');
 
 dotenv.config();
 const dev = process.env.NODE_ENV !== 'production';
@@ -45,41 +46,9 @@ app
           if (!req.isAuthenticated()) {
             return res.redirect('/login');
           }
-          const { user } = req.session.passport;
-          const connection = await dbConnection();
-          const docs = await connection
-            .db('book-club')
-            .collection('users')
-            .find({}, { projection: { books: 1, trades: 1 } })
-            .toArray();
-          const unavailableBookIds = docs.reduce((acc, doc) => {
-            const docTradeIds = doc.trades.submitted.map(
-              (trade) => trade.bookId
-            );
-            return acc.concat(docTradeIds);
-          }, []);
-          const books = docs.reduce((acc, doc) => {
-            const { books: docBooks, _id: userId } = doc;
-            const docBooksWithData = docBooks.map((book) => ({
-              ...book,
-              isAvailable: !unavailableBookIds.includes(book.id),
-              userId,
-            }));
-            return acc.concat(docBooksWithData);
-          }, []);
-          const { awaitingApproval, submitted } = docs.find(
-            (doc) => String(doc._id) === user
-          ).trades;
-          const trades = {
-            awaitingApproval: awaitingApproval.map((trade) => ({
-              book: books.find((book) => book.id === trade.bookId),
-              userId: trade.userId,
-            })),
-            submitted: submitted.map((trade) => ({
-              book: books.find((book) => book.id === trade.bookId),
-            })),
-          };
-          return app.render(req, res, '/allbooks', { books, trades });
+          const { user: userId } = req.session.passport;
+          const queryParams = await getAllBooksAndTrades(userId);
+          return app.render(req, res, '/allbooks', queryParams);
         })
       )
       .get(
@@ -88,30 +57,8 @@ app
           if (!req.isAuthenticated()) {
             return res.redirect('/login');
           }
-          const { user } = req.session.passport;
-          const connection = await dbConnection();
-          const docs = await connection
-            .db('book-club')
-            .collection('users')
-            .find({}, { projection: { books: 1, trades: 1 } })
-            .toArray();
-          const allBooks = docs.reduce((acc, doc) => acc.concat(doc.books), []);
-          const { books: userBooks, trades } = docs.find(
-            (doc) => String(doc._id) === user
-          );
-          const { awaitingApproval, submitted } = trades;
-          const queryParams = {
-            books: userBooks,
-            trades: {
-              awaitingApproval: awaitingApproval.map((trade) => ({
-                book: userBooks.find((book) => book.id === trade.bookId),
-                userId: trade.userId,
-              })),
-              submitted: submitted.map((trade) => ({
-                book: allBooks.find((book) => book.id === trade.bookId),
-              })),
-            },
-          };
+          const { user: userId } = req.session.passport;
+          const queryParams = await getUserBooksAndTrades(userId);
           return app.render(req, res, '/mybooks', queryParams);
         })
       )

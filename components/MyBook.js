@@ -31,11 +31,11 @@ const MyBook = ({ book, classes, removeBook }) => {
     fetch(`/api/book/${id}`, { method: 'DELETE', credentials: 'include' });
   };
 
-  const { imgLink, title } = book;
+  const { imgSrc, title } = book;
 
   return (
     <div className={classes.root}>
-      <img alt={title} src={imgLink} crossOrigin="anonymous" />
+      <img alt={title} src={imgSrc} crossOrigin="anonymous" />
       <button className={classes.button} onClick={handleClick}>
         <Icon className="fas fa-times fa-1x" />
       </button>

@@ -1,6 +1,5 @@
 import fetch from 'isomorphic-unfetch';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import { ObjectID } from 'bson';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
@@ -47,22 +46,16 @@ class AddBookForm extends React.Component {
     event.preventDefault();
     const { userId } = this.props;
     const { searchTerm } = this.state;
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&maxResults=1&projection=lite`;
     try {
-      const result = await fetch(url);
-      const json = await result.json();
-      const { title, imageLinks } = json.items[0].volumeInfo;
-      const imgLink = imageLinks.smallThumbnail;
-      const id = String(new ObjectID());
-      const book = { id, imgLink, title };
-      this.props.addBook(book);
-      this.setState({ searchTerm: '' });
-      fetch(`/api/books/${userId}`, {
+      const res = await fetch(`/api/books/${userId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify(book),
+        body: JSON.stringify({ searchTerm }),
       });
+      const book = await res.json();
+      this.props.addBook(book);
+      this.setState({ searchTerm: '' });
     } catch (err) {
       this.setState({ errMsg: 'Please try again.' });
     }

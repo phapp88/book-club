@@ -1,3 +1,4 @@
+import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
@@ -36,14 +37,14 @@ const AllBook = ({ book, classes, handleTradeOffer, userId }) => {
     });
   };
 
-  const { imgLink, title, userId: bookUserId } = book;
+  const { imgSrc, title, userId: bookUserId } = book;
 
   return (
     <div className={classes.root}>
-      <img alt={title} src={imgLink} />
+      <img alt={title} src={imgSrc} />
       {bookUserId !== userId && book.isAvailable && (
         <button className={classes.button} onClick={handleClick}>
-          <i className="fas fa-exchange-alt fa-1x" />
+          <Icon className="fas fa-exchange-alt fa-1x" />
         </button>
       )}
     </div>
