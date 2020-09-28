@@ -93,7 +93,7 @@ class SignupForm extends React.Component {
         <Button className={classes.button} type="submit" variant="contained">
           Sign Up
         </Button>
-        <Link prefetch href="/login">
+        <Link href="/login">
           <Button
             className={`${classes.button} ${classes.linkBtn}`}
             variant="contained"

@@ -27,9 +27,10 @@ class Settings extends React.Component {
   }
 
   async changePassword(event) {
+    const { userId } = this.props;
     event.preventDefault();
     try {
-      const res = await fetch(`/api/password/${this.props.userId}`, {
+      const res = await fetch(`/api/password/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -66,9 +67,10 @@ class Settings extends React.Component {
   }
 
   async updateProfile(event) {
+    const { userId } = this.props;
     event.preventDefault();
     try {
-      const res = await fetch(`/api/profile/${this.props.userId}`, {
+      const res = await fetch(`/api/profile/${userId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -83,7 +85,6 @@ class Settings extends React.Component {
         this.setState({ profileErrMsg: 'Save failed. Please try again.' });
       }
     } catch (err) {
-      console.log(err);
       this.setState({ profileErrMsg: 'Save failed. Please try again.' });
     }
   }

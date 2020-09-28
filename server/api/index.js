@@ -28,7 +28,7 @@ router
         .collection('users')
         .updateOne({ _id }, { $pull: { books: { id } } });
       return res.end();
-    })
+    }),
   )
   .delete(
     '/trades/:bookId',
@@ -38,30 +38,30 @@ router
       const collection = connection.db('book-club').collection('users');
       collection.updateOne(
         { 'trades.submitted.bookId': bookId },
-        { $pull: { 'trades.submitted': { bookId } } }
+        { $pull: { 'trades.submitted': { bookId } } },
       );
       collection.updateOne(
         { 'trades.awaitingApproval.bookId': bookId },
-        { $pull: { 'trades.awaitingApproval': { bookId } } }
+        { $pull: { 'trades.awaitingApproval': { bookId } } },
       );
       const tradeWasAccepted = Object.prototype.hasOwnProperty.call(
         req.body,
-        'prevUserId'
+        'prevUserId',
       );
       if (tradeWasAccepted) {
         const { prevUserId, nextUserId } = req.body;
         const doc = await collection.findOneAndUpdate(
           { _id: mongodb.ObjectID(prevUserId) },
-          { $pull: { books: { id: bookId } } }
+          { $pull: { books: { id: bookId } } },
         );
         const tradeBook = doc.value.books.find((book) => book.id === bookId);
         collection.updateOne(
           { _id: mongodb.ObjectID(nextUserId) },
-          { $push: { books: tradeBook } }
+          { $push: { books: tradeBook } },
         );
       }
       return res.end();
-    })
+    }),
   )
   .get(
     '/allbooks',
@@ -69,7 +69,7 @@ router
       const { user: userId } = req.session.passport;
       const json = await getAllBooksAndTrades(userId);
       res.send(json);
-    })
+    }),
   )
   .get(
     '/mybooks',
@@ -77,7 +77,7 @@ router
       const { user: userId } = req.session.passport;
       const json = await getUserBooksAndTrades(userId);
       res.send(json);
-    })
+    }),
   )
   .get(
     '/settings',
@@ -96,7 +96,7 @@ router
         userId,
       };
       res.send(json);
-    })
+    }),
   )
   .post(
     '/books/:userId',
@@ -109,7 +109,7 @@ router
       delete book.imgLink;
 
       return res.send(book);
-    })
+    }),
   )
   .post(
     '/trades',
@@ -126,14 +126,14 @@ router
               userId: offerorId,
             },
           },
-        }
+        },
       );
       collection.updateOne(
         { _id: mongodb.ObjectID(offerorId) },
-        { $push: { 'trades.submitted': { bookId } } }
+        { $push: { 'trades.submitted': { bookId } } },
       );
       return res.end();
-    })
+    }),
   )
   .put(
     '/password/:userId',
@@ -145,7 +145,7 @@ router
       const collection = await connection.db('book-club').collection('users');
       const { password } = await collection.findOne(
         { _id },
-        { projection: { _id: 0, password: 1 } }
+        { projection: { _id: 0, password: 1 } },
       );
       const passwordIsCorrect = await bcrypt.compare(currentPassword, password);
       if (!passwordIsCorrect) {
@@ -155,7 +155,7 @@ router
       const newHash = await bcrypt.hash(newPassword, saltRounds);
       await collection.updateOne({ _id }, { $set: { password: newHash } });
       return res.send({ msg: 'Password successfully changed.' });
-    })
+    }),
   )
   .put(
     '/profile/:userId',
@@ -168,13 +168,13 @@ router
       try {
         const doc = await collection.updateOne(
           { _id },
-          { $set: { city, name, state } }
+          { $set: { city, name, state } },
         );
         return res.send(doc);
       } catch (err) {
         return res.send(err);
       }
-    })
+    }),
   );
 
 module.exports = router;

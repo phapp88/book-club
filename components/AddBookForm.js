@@ -44,7 +44,7 @@ class AddBookForm extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const { userId } = this.props;
+    const { addBook, userId } = this.props;
     const { searchTerm } = this.state;
     try {
       const res = await fetch(`/api/books/${userId}`, {
@@ -54,7 +54,7 @@ class AddBookForm extends React.Component {
         body: JSON.stringify({ searchTerm }),
       });
       const book = await res.json();
-      this.props.addBook(book);
+      addBook(book);
       this.setState({ searchTerm: '' });
     } catch (err) {
       this.setState({ errMsg: 'Please try again.' });

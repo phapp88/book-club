@@ -48,7 +48,7 @@ class AllBooks extends React.Component {
     const nextBooks = books.map((book) =>
       book.id === offer.book.id
         ? { ...book, isAvailable: true, userId: offer.userId }
-        : book
+        : book,
     );
     this.setState({
       books: nextBooks,
@@ -56,7 +56,7 @@ class AllBooks extends React.Component {
       trades: {
         ...trades,
         awaitingApproval: trades.awaitingApproval.filter(
-          (trade) => trade.book.id !== offer.book.id
+          (trade) => trade.book.id !== offer.book.id,
         ),
       },
     });
@@ -76,7 +76,7 @@ class AllBooks extends React.Component {
       trades,
     } = this.state;
     const nextBooks = books.map((book) =>
-      book.id === offer.book.id ? { ...book, isAvailable: true } : book
+      book.id === offer.book.id ? { ...book, isAvailable: true } : book,
     );
     this.setState({
       books: nextBooks,
@@ -85,10 +85,10 @@ class AllBooks extends React.Component {
       showSubmittedTrades: showSubmittedTrades && trades.submitted.length > 1,
       trades: {
         awaitingApproval: trades.awaitingApproval.filter(
-          (trade) => trade.book.id !== offer.book.id
+          (trade) => trade.book.id !== offer.book.id,
         ),
         submitted: trades.submitted.filter(
-          (trade) => trade.book.id !== offer.book.id
+          (trade) => trade.book.id !== offer.book.id,
         ),
       },
     });
@@ -101,7 +101,7 @@ class AllBooks extends React.Component {
   handleTradeOffer(tradeBook) {
     const { books, trades } = this.state;
     const nextBooks = books.map((book) =>
-      book.id === tradeBook.id ? { ...book, isAvailable: false } : book
+      book.id === tradeBook.id ? { ...book, isAvailable: false } : book,
     );
     this.setState({
       books: nextBooks,
@@ -205,7 +205,7 @@ AllBooks.propTypes = {
       imgLink: PropTypes.string,
       title: PropTypes.string,
       userId: PropTypes.string,
-    })
+    }),
   ).isRequired,
   classes: PropTypes.shape({
     books: PropTypes.string,

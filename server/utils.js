@@ -38,33 +38,32 @@ const createBooksArray = async (docs, userId = null) => {
             isAvailable: !unavailableBookIds.includes(book.id),
             userId,
           };
-        })
+        }),
       );
       allBooks.push(...docBooksWithData);
     }
 
     return allBooks;
-  } else {
-    const userBooks = await Promise.all(
-      docs
-        .find((doc) => String(doc._id) === userId)
-        .books.map(async (book) => {
-          const { id, imgLink, title } = book;
-          const imgRes = await fetch(imgLink);
-          const imgBuf = await imgRes.buffer();
-          const imgSrc = `data:image/jpeg;base64,${imgBuf.toString('base64')}`;
-          return { id, imgSrc, title };
-        })
-    );
-
-    return userBooks;
   }
+  const userBooks = await Promise.all(
+    docs
+      .find((doc) => String(doc._id) === userId)
+      .books.map(async (book) => {
+        const { id, imgLink, title } = book;
+        const imgRes = await fetch(imgLink);
+        const imgBuf = await imgRes.buffer();
+        const imgSrc = `data:image/jpeg;base64,${imgBuf.toString('base64')}`;
+        return { id, imgSrc, title };
+      }),
+  );
+
+  return userBooks;
 };
 
 const createTradesArray = (docs, userId) => {
   const books = docs.reduce((acc, doc) => acc.concat(doc.books), []);
   const { awaitingApproval, submitted } = docs.find(
-    (doc) => String(doc._id) === userId
+    (doc) => String(doc._id) === userId,
   ).trades;
   const trades = {
     awaitingApproval: awaitingApproval.map((trade) => ({

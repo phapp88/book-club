@@ -43,7 +43,7 @@ const AllBook = ({ book, classes, handleTradeOffer, userId }) => {
     <div className={classes.root}>
       <img alt={title} src={imgSrc} />
       {bookUserId !== userId && book.isAvailable && (
-        <button className={classes.button} onClick={handleClick}>
+        <button className={classes.button} onClick={handleClick} type="button">
           <Icon className="fas fa-exchange-alt fa-1x" />
         </button>
       )}
@@ -54,8 +54,10 @@ const AllBook = ({ book, classes, handleTradeOffer, userId }) => {
 AllBook.propTypes = {
   book: PropTypes.shape({
     id: PropTypes.string,
-    imgLink: PropTypes.string,
+    imgSrc: PropTypes.string,
+    isAvailable: PropTypes.bool,
     title: PropTypes.string,
+    userId: PropTypes.string,
   }).isRequired,
   classes: PropTypes.shape({
     button: PropTypes.string,

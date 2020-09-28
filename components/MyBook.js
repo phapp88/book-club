@@ -36,7 +36,7 @@ const MyBook = ({ book, classes, removeBook }) => {
   return (
     <div className={classes.root}>
       <img alt={title} src={imgSrc} crossOrigin="anonymous" />
-      <button className={classes.button} onClick={handleClick}>
+      <button className={classes.button} onClick={handleClick} type="button">
         <Icon className="fas fa-times fa-1x" />
       </button>
     </div>
@@ -46,7 +46,7 @@ const MyBook = ({ book, classes, removeBook }) => {
 MyBook.propTypes = {
   book: PropTypes.shape({
     id: PropTypes.string,
-    imgLink: PropTypes.string,
+    imgSrc: PropTypes.string,
     title: PropTypes.string,
   }).isRequired,
   classes: PropTypes.shape({

@@ -1,14 +1,16 @@
 {
-    "env": {
-      "browser": "true",
-      "node": "true"
-    },
-    "extends": "airbnb",
-    "rules": {
-      "linebreak-style": "off",
-      "react/jsx-filename-extension": "off"
-    },
-    "settings": {
-      "import/core-modules": ["jss", "react-jss", "styled-jsx"]
-    }
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": ["airbnb", "prettier"],
+  "rules": {
+    "no-underscore-dangle": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-wrap-multilines": "off"
+  },
+  "settings": {
+    "import/core-modules": ["jss", "react-jss", "styled-jsx"]
+  }
 }

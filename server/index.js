@@ -35,7 +35,7 @@ app
           secret: process.env.SESSION_SECRET,
           resave: false,
           saveUninitialized: false,
-        })
+        }),
       )
       .use(passport.initialize())
       .use(passport.session())
@@ -49,7 +49,7 @@ app
           const { user: userId } = req.session.passport;
           const queryParams = await getAllBooksAndTrades(userId);
           return app.render(req, res, '/allbooks', queryParams);
-        })
+        }),
       )
       .get(
         '/mybooks',
@@ -60,7 +60,7 @@ app
           const { user: userId } = req.session.passport;
           const queryParams = await getUserBooksAndTrades(userId);
           return app.render(req, res, '/mybooks', queryParams);
-        })
+        }),
       )
       .get('/logout', (req, res) => {
         req.logout();
@@ -89,7 +89,7 @@ app
             userId,
           };
           return app.render(req, res, '/settings', queryParams);
-        })
+        }),
       )
       .post('/login', (req, res, nxt) => {
         passport.authenticate('local', (authErr, user) => {
@@ -141,7 +141,7 @@ app
             };
             return app.render(req, res, '/signup', queryParams);
           }
-        })
+        }),
       )
       .get('*', (req, res) => handle(req, res))
       .listen(process.env.PORT || 3000);

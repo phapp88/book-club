@@ -1,3 +1,4 @@
+/* eslint react/jsx-props-no-spreading: "off", react/forbid-prop-types: "off" */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
@@ -19,7 +20,7 @@ function MyApp(props) {
   React.useEffect(() => {
     const node = loadCSS(
       'https://use.fontawesome.com/releases/v5.12.0/css/all.css',
-      document.querySelector('#font-awesome-css')
+      document.querySelector('#font-awesome-css'),
     );
 
     return () => {
@@ -28,7 +29,7 @@ function MyApp(props) {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>Book Trading Club</title>
         <meta
@@ -40,7 +41,7 @@ function MyApp(props) {
         <CssBaseline />
         <Component {...pageProps} />
       </ThemeProvider>
-    </React.Fragment>
+    </>
   );
 }
 

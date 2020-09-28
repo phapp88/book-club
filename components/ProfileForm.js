@@ -85,6 +85,7 @@ ProfileForm.propTypes = {
     button: PropTypes.string,
     form: PropTypes.string,
     heading: PropTypes.string,
+    helperText: PropTypes.string,
   }).isRequired,
   errMsg: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,

@@ -59,7 +59,7 @@ class MyBooks extends React.Component {
       trades: {
         ...trades,
         awaitingApproval: trades.awaitingApproval.filter(
-          (trade) => trade.book.id !== offer.book.id
+          (trade) => trade.book.id !== offer.book.id,
         ),
       },
     });
@@ -79,10 +79,10 @@ class MyBooks extends React.Component {
       showSubmittedTrades: showSubmittedTrades && trades.submitted.length > 1,
       trades: {
         awaitingApproval: trades.awaitingApproval.filter(
-          (trade) => trade.book.id !== offer.book.id
+          (trade) => trade.book.id !== offer.book.id,
         ),
         submitted: trades.submitted.filter(
-          (trade) => trade.book.id !== offer.book.id
+          (trade) => trade.book.id !== offer.book.id,
         ),
       },
     });
@@ -180,7 +180,7 @@ MyBooks.propTypes = {
       id: PropTypes.string,
       imgLink: PropTypes.string,
       title: PropTypes.string,
-    })
+    }),
   ).isRequired,
   classes: PropTypes.shape({
     books: PropTypes.string,
