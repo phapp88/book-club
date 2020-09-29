@@ -29,12 +29,11 @@ const styles = (theme) => ({
 class SignupForm extends React.Component {
   constructor(props) {
     super(props);
-    const { email, errMsg, name, password } = this.props;
     this.state = {
-      email,
-      errMsg,
-      name,
-      password,
+      email: '',
+      errMsg: '',
+      name: '',
+      password: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -113,10 +112,6 @@ SignupForm.propTypes = {
     heading: PropTypes.string,
     linkBtn: PropTypes.string,
   }).isRequired,
-  email: PropTypes.string.isRequired,
-  errMsg: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(SignupForm);

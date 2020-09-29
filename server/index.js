@@ -62,18 +62,30 @@ app
           return app.render(req, res, '/mybooks', queryParams);
         }),
       )
+      .get('/login', (req, res) => {
+        if (req.isAuthenticated()) {
+          return res.redirect('/');
+        }
+        return app.render(req, res, '/login', {});
+      })
+      .get('/signup', (req, res) => {
+        if (req.isAuthenticated()) {
+          return res.redirect('/');
+        }
+        return app.render(req, res, '/signup', {});
+      })
       .get('/logout', (req, res) => {
         req.logout();
         req.session.destroy((err) => {
           if (err) throw err;
-          res.redirect('/');
+          return res.redirect('/');
         });
       })
       .get(
         '/settings',
         wrap(async (req, res) => {
           if (!req.isAuthenticated()) {
-            res.redirect('/login');
+            return res.redirect('/login');
           }
           const { user } = req.session.passport;
           const _id = mongodb.ObjectID(user);
