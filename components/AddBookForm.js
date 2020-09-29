@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-unfetch';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
@@ -6,7 +5,7 @@ import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -30,22 +29,17 @@ const styles = {
   },
 };
 
-class AddBookForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { errMsg: '', searchTerm: '' };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const AddBookForm = ({ addBook, classes, userId }) => {
+  const [errMsg, setErrMsg] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  handleChange(event) {
-    this.setState({ errMsg: '', searchTerm: event.target.value });
-  }
+  const handleSearchTermChange = (event) => {
+    setErrMsg('');
+    setSearchTerm(event.target.value);
+  };
 
-  async handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const { addBook, userId } = this.props;
-    const { searchTerm } = this.state;
     try {
       const res = await fetch(`/api/books/${userId}`, {
         method: 'POST',
@@ -55,42 +49,38 @@ class AddBookForm extends React.Component {
       });
       const book = await res.json();
       addBook(book);
-      this.setState({ searchTerm: '' });
+      setSearchTerm('');
     } catch (err) {
-      this.setState({ errMsg: 'Please try again.' });
+      setErrMsg('Please try again.');
     }
-  }
+  };
 
-  render() {
-    const { classes } = this.props;
-    const { errMsg, searchTerm } = this.state;
-    return (
-      <form autoComplete="off" onSubmit={this.handleSubmit}>
-        <Paper className={classes.paper}>
-          <Toolbar className={classes.toolbar}>
-            <Input
-              disableUnderline
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton className={classes.iconButton} type="submit">
-                    <Icon className="fas fa-plus fa-1x" />
-                  </IconButton>
-                </InputAdornment>
-              }
-              name="searchTerm"
-              onChange={this.handleChange}
-              placeholder="Add Book"
-              value={searchTerm}
-            />
-          </Toolbar>
-        </Paper>
-        <FormHelperText className={classes.helperText} error>
-          {errMsg}
-        </FormHelperText>
-      </form>
-    );
-  }
-}
+  return (
+    <form autoComplete="off" onSubmit={handleSubmit}>
+      <Paper className={classes.paper}>
+        <Toolbar className={classes.toolbar}>
+          <Input
+            disableUnderline
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton className={classes.iconButton} type="submit">
+                  <Icon className="fas fa-plus fa-1x" />
+                </IconButton>
+              </InputAdornment>
+            }
+            name="searchTerm"
+            onChange={handleSearchTermChange}
+            placeholder="Add Book"
+            value={searchTerm}
+          />
+        </Toolbar>
+      </Paper>
+      <FormHelperText className={classes.helperText} error>
+        {errMsg}
+      </FormHelperText>
+    </form>
+  );
+};
 
 AddBookForm.propTypes = {
   addBook: PropTypes.func.isRequired,
