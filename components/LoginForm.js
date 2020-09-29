@@ -2,7 +2,7 @@ import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -27,67 +27,65 @@ const styles = (theme) => ({
   },
 });
 
-class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    const { email, errMsg, password } = this.props;
-    this.state = { email, errMsg, password };
-    this.handleChange = this.handleChange.bind(this);
-  }
+const LoginForm = ({ classes }) => {
+  const [email, setEmail] = useState('');
+  const [errMsg, setErrMsg] = useState('');
+  const [password, setPassword] = useState('');
 
-  handleChange(event) {
-    const { id, value } = event.target;
-    this.setState({ errMsg: '', [id]: value });
-  }
+  const handleEmailFieldChange = (event) => {
+    setErrMsg('');
+    setEmail(event.target.value);
+  };
 
-  render() {
-    const { classes } = this.props;
-    const { email, errMsg, password } = this.state;
-    return (
-      <form
-        action="/login"
-        autoComplete="off"
-        className={classes.form}
-        method="post"
-      >
-        <Typography className={classes.heading} variant="h4">
-          Login
-        </Typography>
-        <TextField
-          fullWidth
-          id="email"
-          label="Email"
-          name="email"
-          onChange={this.handleChange}
-          required
-          value={email}
-        />
-        <TextField
-          fullWidth
-          id="password"
-          label="Password"
-          name="password"
-          onChange={this.handleChange}
-          required
-          type="password"
-          value={password}
-        />
-        <FormHelperText error>{errMsg}</FormHelperText>
-        <Button className={classes.button} type="submit" variant="contained">
-          Login
+  const handlePasswordFieldChange = (event) => {
+    setErrMsg('');
+    setPassword(event.target.value);
+  };
+
+  return (
+    <form
+      action="/login"
+      autoComplete="off"
+      className={classes.form}
+      method="post"
+    >
+      <Typography className={classes.heading} variant="h4">
+        Login
+      </Typography>
+      <TextField
+        fullWidth
+        id="email"
+        label="Email"
+        name="email"
+        onChange={handleEmailFieldChange}
+        required
+        value={email}
+      />
+      <TextField
+        fullWidth
+        id="password"
+        label="Password"
+        name="password"
+        onChange={handlePasswordFieldChange}
+        required
+        type="password"
+        value={password}
+      />
+      <FormHelperText error>{errMsg}</FormHelperText>
+      <Button className={classes.button} type="submit" variant="contained">
+        Login
+      </Button>
+      <Link href="/signup">
+        <Button
+          className={`${classes.button} ${classes.linkBtn}`}
+          variant="contained"
+        >
+          Register
         </Button>
-        <Link href="/signup">
-          <Button
-            className={`${classes.button} ${classes.linkBtn}`}
-            variant="contained"
-          >
-            Register
-          </Button>
-        </Link>
-      </form>
-    );
-  }
-}
+      </Link>
+    </form>
+  );
+};
 
 LoginForm.propTypes = {
   classes: PropTypes.shape({
@@ -96,9 +94,6 @@ LoginForm.propTypes = {
     heading: PropTypes.string,
     linkBtn: PropTypes.string,
   }).isRequired,
-  email: PropTypes.string.isRequired,
-  errMsg: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(LoginForm);

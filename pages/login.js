@@ -6,7 +6,7 @@ import LoginForm from '../components/LoginForm';
 
 const Login = ({ email, errMsg, password, userId }) => (
   <Layout userId={userId}>
-    <LoginForm email={email} errMsg={errMsg} password={password} />
+    <LoginForm />
   </Layout>
 );
 
