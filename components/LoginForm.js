@@ -2,7 +2,7 @@ import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -27,18 +27,29 @@ const styles = (theme) => ({
   },
 });
 
-const LoginForm = ({ classes }) => {
+const LoginForm = ({
+  classes,
+  email: wrongEmail,
+  errMsg,
+  password: wrongPassword,
+}) => {
   const [email, setEmail] = useState('');
-  const [errMsg, setErrMsg] = useState('');
+  const [message, setMessage] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    setEmail(wrongEmail);
+    setMessage(errMsg);
+    setPassword(wrongPassword);
+  }, [errMsg, wrongEmail, wrongPassword]);
+
   const handleEmailFieldChange = (event) => {
-    setErrMsg('');
+    setMessage('');
     setEmail(event.target.value);
   };
 
   const handlePasswordFieldChange = (event) => {
-    setErrMsg('');
+    setMessage('');
     setPassword(event.target.value);
   };
 
@@ -59,6 +70,7 @@ const LoginForm = ({ classes }) => {
         name="email"
         onChange={handleEmailFieldChange}
         required
+        type="email"
         value={email}
       />
       <TextField
@@ -71,7 +83,7 @@ const LoginForm = ({ classes }) => {
         type="password"
         value={password}
       />
-      <FormHelperText error>{errMsg}</FormHelperText>
+      <FormHelperText error>{message}</FormHelperText>
       <Button className={classes.button} type="submit" variant="contained">
         Login
       </Button>
@@ -94,6 +106,9 @@ LoginForm.propTypes = {
     heading: PropTypes.string,
     linkBtn: PropTypes.string,
   }).isRequired,
+  email: PropTypes.string.isRequired,
+  errMsg: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(LoginForm);

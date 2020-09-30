@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
@@ -26,14 +26,27 @@ const styles = (theme) => ({
   },
 });
 
-const SignupForm = ({ classes }) => {
+const SignupForm = ({
+  classes,
+  email: inUseEmail,
+  errMsg,
+  name: initialName,
+  password: initialPassword,
+}) => {
   const [email, setEmail] = useState('');
-  const [errMsg, setErrMsg] = useState('');
+  const [message, setMessage] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    setEmail(inUseEmail);
+    setMessage(errMsg);
+    setName(initialName);
+    setPassword(initialPassword);
+  }, [inUseEmail, errMsg, initialName, initialPassword]);
+
   const handleEmailFieldChange = (event) => {
-    setErrMsg('');
+    setMessage('');
     setEmail(event.target.value);
   };
 
@@ -62,17 +75,19 @@ const SignupForm = ({ classes }) => {
         name="name"
         onChange={handleNameFieldChange}
         required
+        type="text"
         value={name}
       />
       <TextField
         fullWidth
         id="email"
-        error={errMsg !== ''}
-        helperText={errMsg}
+        error={message !== ''}
+        helperText={message}
         label="Email"
         name="email"
         onChange={handleEmailFieldChange}
         required
+        type="email"
         value={email}
       />
       <TextField
@@ -107,6 +122,10 @@ SignupForm.propTypes = {
     heading: PropTypes.string,
     linkBtn: PropTypes.string,
   }).isRequired,
+  email: PropTypes.string.isRequired,
+  errMsg: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(SignupForm);

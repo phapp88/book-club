@@ -108,7 +108,7 @@ app
           if (authErr) return nxt(authErr);
           if (!user) {
             const { email, password } = req.body;
-            const errMsg = 'The username/password combination is not valid.';
+            const errMsg = 'Incorrect username or password.';
             return app.render(req, res, '/login', { email, errMsg, password });
           }
           return req.login(user, (loginErr) => {
