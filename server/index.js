@@ -31,7 +31,7 @@ app
       .use(bodyParser.urlencoded({ extended: true }))
       .use(
         session({
-          store: new MongoStore({ url: process.env.MLAB }),
+          store: new MongoStore({ url: process.env.DATABASE_URI }),
           secret: process.env.SESSION_SECRET,
           resave: false,
           saveUninitialized: false,

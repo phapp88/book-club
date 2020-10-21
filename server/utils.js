@@ -1,4 +1,4 @@
-const fetch = require('isomorphic-unfetch');
+const fetch = require('node-fetch');
 const mongodb = require('mongodb');
 const { ObjectID } = require('bson');
 
