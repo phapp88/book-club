@@ -26,7 +26,7 @@ app
   .prepare()
   .then(() => {
     express()
-      .use(helmet())
+      .use(helmet({ contentSecurityPolicy: false }))
       .use(bodyParser.json())
       .use(bodyParser.urlencoded({ extended: true }))
       .use(
